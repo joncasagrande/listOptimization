@@ -13,12 +13,16 @@ import java.util.*
 
 class ContactLoaderManager(val context: Context, val callback : ContactLoaderCallback): LoaderManager.LoaderCallbacks<Cursor> {
     internal val NAME_TEMPLATE = "%s %s"
-
+    var search = ""
     interface ContactLoaderCallback{
         fun loadFinished(contacts: List<Contact> )
     }
 
-    override fun onCreateLoader(p0: Int, p1: Bundle?): Loader<Cursor> {
+    override fun onCreateLoader(p0: Int, bundle: Bundle?): Loader<Cursor> {
+        if(bundle?.getString("SEARCH") != null){
+            search =  bundle.getString("SEARCH")!!
+        }
+        
         val selection = ContactsContract.Data.MIMETYPE + " in (?, ?, ?) "
         val selectionArgs = arrayOf(
             ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE,
@@ -70,14 +74,14 @@ class ContactLoaderManager(val context: Context, val callback : ContactLoaderCal
                     familyName = givenName
                     givenName = ""
                 }
-                if (givenName.isEmpty() && familyName.isEmpty() && companyName != null && !companyName!!.isEmpty()) {
+                if (givenName.isEmpty() && familyName.isEmpty() && companyName != null && !companyName.isEmpty()) {
                     /*workaround: if there is no family name we get contact sorted using  given name,
                      * so for contact header not to broke familyName=givenName and givenName is discarded*/
                     familyName = companyName
                     givenName = ""
                 }
 
-                var item = Contact(contactId, givenName, familyName, photoId != null)
+                val item = Contact(contactId, givenName, familyName, photoId != null)
                 linkedList.add(item)
 
                 if (mimeType == ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE) {
