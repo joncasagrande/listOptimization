@@ -1,6 +1,10 @@
 package com.test.listoptimizationtest.diffUtils
 
+import android.os.Bundle
 import android.support.v7.util.DiffUtil
+import com.test.listoptimizationtest.NAME
+import com.test.listoptimizationtest.PICTURE
+import com.test.listoptimizationtest.SURNAME
 import com.test.listoptimizationtest.model.Contact
 
 class ContactDiffUtilsCallback(val oldList: List<Contact>, val newList: List<Contact>): DiffUtil.Callback(){
@@ -24,4 +28,23 @@ class ContactDiffUtilsCallback(val oldList: List<Contact>, val newList: List<Con
 		return newContact.name === oldContact.name && newContact.surename === oldContact.surename
 	}
 	
+	override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+		val bundle = Bundle()
+		val newContact = newList[newItemPosition]
+		val oldContact = oldList[oldItemPosition]
+		
+		if(newContact.name === oldContact.name){
+			bundle.putString(NAME, newContact.name)
+		}
+		
+		if(newContact.surename === oldContact.surename){
+			bundle.putString(SURNAME, newContact.surename)
+		}
+		
+		if(newContact.hasPhoto && !oldContact.hasPhoto){
+			bundle.putBoolean(PICTURE, newContact.hasPhoto)
+		}
+		
+		return bundle
+	}
 }
