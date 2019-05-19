@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import com.test.listoptimizationtest.adapter.ContactListAdapter
+import com.test.listoptimizationtest.adapter.ContactRecyclerViewAdapter
 import com.test.listoptimizationtest.loader.ContactLoaderManager
 import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
 
     val contacts: MutableList<Contact> = arrayListOf()
     var contactListAdapter = ContactListAdapter()
+	var contactRecyclerViewAdapter : ContactRecyclerViewAdapter? = null
     private val mPermissionList = arrayOf(
         Manifest.permission.READ_CONTACTS
     )
@@ -29,10 +31,13 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
         this.contacts.clear()
         this.contacts.addAll(contacts.toMutableList())
         rvContact.layoutManager = LinearLayoutManager(this@MainActivity)
-        //rvContact.adapter = ContactRecyclerViewAdapter(contacts.toMutableList())
-    
-        contactListAdapter.submitList(contacts)
-        
+	
+	    
+	    //contactRecyclerViewAdapter.swapItems(contacts)
+	    //rvContact.adapter = contactRecyclerViewAdapter
+     
+     
+	    contactListAdapter.submitList(contacts)
         rvContact.adapter = contactListAdapter
         
     }
@@ -75,7 +80,7 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
     
     fun doSearch(view: View){
         val bundle = Bundle()
-        bundle.putString("SEARCH",editText.text.toString())
+        bundle.putString(SEARCH,editText.text.toString())
         LoaderManager.getInstance(this).restartLoader(INSTANCES_LIST_LOADER, bundle,contactLoaderManager)
     }
 }

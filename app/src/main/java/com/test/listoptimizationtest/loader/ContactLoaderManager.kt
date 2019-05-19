@@ -8,6 +8,7 @@ import android.provider.ContactsContract
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
+import com.test.listoptimizationtest.SEARCH
 import com.test.listoptimizationtest.model.Contact
 import java.util.*
 
@@ -19,8 +20,8 @@ class ContactLoaderManager(val context: Context, val callback : ContactLoaderCal
     }
 
     override fun onCreateLoader(p0: Int, bundle: Bundle?): Loader<Cursor> {
-        if(bundle?.getString("SEARCH") != null){
-            search =  bundle.getString("SEARCH")!!
+        if(bundle?.getString(SEARCH) != null){
+            search =  bundle.getString(SEARCH)!!
         }
         
         val selection = ContactsContract.Data.MIMETYPE + " in (?, ?, ?) "
@@ -53,42 +54,29 @@ class ContactLoaderManager(val context: Context, val callback : ContactLoaderCal
             val dataIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Contactables.DATA)
             val givenNameIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME)
             val familyNameIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME)
-            val companyNameIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.COMPANY)
+            //val companyNameIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.COMPANY)
             val photoIdIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.PHOTO_ID)
 
             while (cursor.moveToNext()) {
 
                 val contactId = cursor.getLong(idIdx)
                 val photoId = cursor.getLong(photoIdIdx)
-                var givenName: String? = cursor.getString(givenNameIdx)
-                var familyName: String? = cursor.getString(familyNameIdx)
-                val companyName = cursor.getString(companyNameIdx)
+                val givenName: String? = cursor.getString(givenNameIdx)
+                val familyName: String? = cursor.getString(familyNameIdx)
                 val data = cursor.getString(dataIdx)
                 val mimeType = cursor.getString(mimeTypeIdx)
-                if (givenName == null) {
-                    givenName = ""
-                }
-                if (familyName == null || familyName.isEmpty()) {
-                    /*workaround: if there is no family name we get contact sorted using  given name,
-                     * so for contact header not to broke familyName=givenName and givenName is discarded*/
-                    familyName = givenName
-                    givenName = ""
-                }
-                if (givenName.isEmpty() && familyName.isEmpty() && companyName != null && !companyName.isEmpty()) {
-                    /*workaround: if there is no family name we get contact sorted using  given name,
-                     * so for contact header not to broke familyName=givenName and givenName is discarded*/
-                    familyName = companyName
-                    givenName = ""
-                }
+                
 
-                val item = Contact(contactId, givenName, familyName, photoId != null)
-                linkedList.add(item)
-
-                if (mimeType == ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE) {
-                    val address = Address(Locale.getDefault())
-                    address.setAddressLine(0, data)
-                    address.featureName = String.format(Locale.US, NAME_TEMPLATE, givenName, familyName)
-                    item.addressList.add(address)
+                if(!givenName.isNullOrEmpty() && !familyName.isNullOrEmpty() ) {
+                    val item = Contact(contactId, givenName, familyName, photoId != null)
+                    linkedList.add(item)
+    
+                    if (mimeType == ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE) {
+                        val address = Address(Locale.getDefault())
+                        address.setAddressLine(0, data)
+                        address.featureName = String.format(Locale.US, NAME_TEMPLATE, givenName, familyName)
+                        item.addressList.add(address)
+                    }
                 }
             }
         }
