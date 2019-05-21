@@ -5,18 +5,17 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import com.test.listoptimizationtest.NAME
-import com.test.listoptimizationtest.PICTURE
-import com.test.listoptimizationtest.R
-import com.test.listoptimizationtest.SURNAME
+import com.test.listoptimizationtest.*
 import com.test.listoptimizationtest.diffUtils.ContactDiffUtilsCallback
 import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*
 
 
-class ContactRecyclerViewAdapter(val data: MutableList<Contact> ) : RecyclerView.Adapter<ContactViewHolder>() {
-
+class ContactRecyclerViewAdapter : RecyclerView.Adapter<ContactViewHolder>() {
+    var data: MutableList<Contact> = emptyList<Contact>().toMutableList()
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder(
             LayoutInflater.from(parent.context)
@@ -46,7 +45,11 @@ class ContactRecyclerViewAdapter(val data: MutableList<Contact> ) : RecyclerView
     
     override fun getItemCount() = data.size
 
-    override fun onBindViewHolder(holder: ContactViewHolder, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: ContactViewHolder, position: Int) = holder.bind(data[position], View.OnClickListener {
+        val bundle: Bundle = Bundle()
+        bundle.putString(FAVORITE, FAVORITE)
+        notifyItemChanged(position, bundle)
+    })
     
     fun swapItems(contacts: List<Contact>) {
         // compute diffs

@@ -6,7 +6,7 @@ import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*
 
 class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-	fun bind(item: Contact) = with(itemView) {
+	fun bind(item: Contact, clickListener : View.OnClickListener ) = with(itemView) {
 		tx_name.text = item.name
 		tx_sureName.text = item.surename
 	
@@ -17,9 +17,10 @@ class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 			.crossFade()
 			.into(iv_contact)
 		*/
-		
+		ibv_favorite.setOnClickListener(clickListener)
 		setOnClickListener {
 			// TODO: Handle on click
+			
 		}
 	}
 }
