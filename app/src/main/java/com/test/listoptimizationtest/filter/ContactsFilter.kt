@@ -1,13 +1,10 @@
 package com.test.listoptimizationtest.filter
 
 import android.widget.Filter
+import com.test.listoptimizationtest.loader.ContactLoaderManager
 import com.test.listoptimizationtest.model.Contact
 
-class ContactsFilter(val contact : MutableList<Contact>, val contactsFilterListener: ContactsFilterListener ) : Filter(){
-
-	interface ContactsFilterListener{
-		fun onpublisResults(filterResults: MutableList<Contact>)
-	}
+class ContactsFilter(val contact : MutableList<Contact>, val contactsFilterListener: ContactLoaderManager.ContactLoaderCallback) : Filter(){
 	
 	override fun performFiltering(constraint: CharSequence?): FilterResults {
 		val filterResults = FilterResults()
@@ -25,7 +22,7 @@ class ContactsFilter(val contact : MutableList<Contact>, val contactsFilterListe
 	
 	override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 		if (results!=null && results.values is List<*>){
-			contactsFilterListener.onpublisResults(results.values as MutableList<Contact>)
+			contactsFilterListener.loadFinished(results.values as MutableList<Contact>)
 		}
 	}
 	
