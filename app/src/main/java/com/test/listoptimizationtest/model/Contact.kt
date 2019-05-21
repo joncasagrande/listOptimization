@@ -4,6 +4,8 @@ import android.location.Address
 
 data class Contact(val id: Long, val name: String, val surename : String,val hasPhoto : Boolean){
     var addressList= ArrayList<Address>()
+    var isFavorite = false
+    
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
