@@ -18,11 +18,13 @@ import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
+
+
 class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCallback {
 
     val contacts: MutableList<Contact> = arrayListOf()
     var contactListAdapter = ContactListAdapter()
-	var contactRecyclerViewAdapter : ContactRecyclerViewAdapter? = null
+	var contactRecyclerViewAdapter : ContactRecyclerViewAdapter = ContactRecyclerViewAdapter(contacts.toMutableList())
     private val mPermissionList = arrayOf(
         Manifest.permission.READ_CONTACTS
     )
@@ -31,18 +33,17 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
         Log.d("MainActivity ", "contacts Size: ${contacts.size}")
         this.contacts.clear()
         this.contacts.addAll(contacts.toMutableList())
-        rvContact.layoutManager = LinearLayoutManager(this@MainActivity)
-    
+        val start = System.currentTimeMillis()
         /*
-        contactRecyclerViewAdapter.let {
-            contactRecyclerViewAdapter = ContactRecyclerViewAdapter()
-        }
-        contactRecyclerViewAdapter.swapItems(contacts.toMutableList())
+            contactRecyclerViewAdapter.swapItems(contacts.toMutableList())
+            rvContact.adapter = contactRecyclerViewAdapter
         */
-     
-	    contactListAdapter.submitList(contacts)
-        rvContact.adapter = contactListAdapter
-        
+		   contactListAdapter.submitList(contacts)
+		   rvContact.adapter = contactListAdapter
+		
+        val runTime = System.currentTimeMillis() - start
+        Log.d("MAINACTIVITY","Load Time ${runTime}")
+
     }
 
     lateinit var contactLoaderManager: ContactLoaderManager
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
         setContentView(R.layout.activity_main)
         validatePermissions()
         contactLoaderManager = ContactLoaderManager(this@MainActivity,this@MainActivity)
-        
+        rvContact.layoutManager = LinearLayoutManager(this@MainActivity)
     
     }
     private fun validatePermissions(){

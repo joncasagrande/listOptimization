@@ -13,8 +13,7 @@ import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*
 
 
-class ContactRecyclerViewAdapter : RecyclerView.Adapter<ContactViewHolder>() {
-    var data: MutableList<Contact> = emptyList<Contact>().toMutableList()
+class ContactRecyclerViewAdapter(val data: MutableList<Contact>) : RecyclerView.Adapter<ContactViewHolder>() {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder(
@@ -61,6 +60,7 @@ class ContactRecyclerViewAdapter : RecyclerView.Adapter<ContactViewHolder>() {
         data.addAll(contacts)
         
         diffResult.dispatchUpdatesTo(this) // calls adapter's notify methods after diff is computed
+        
     }
     
     
