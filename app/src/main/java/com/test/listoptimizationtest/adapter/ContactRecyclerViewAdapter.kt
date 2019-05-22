@@ -1,6 +1,7 @@
 package com.test.listoptimizationtest.adapter
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -38,6 +39,14 @@ class ContactRecyclerViewAdapter(val data: MutableList<Contact>) : RecyclerView.
             if(bundle[PICTURE] != null){
                 //TODO set photo
             }
+	        if(bundle[FAVORITE] != null){
+		
+		        if(data[position].isFavorite){
+			        holder.itemView.ibv_favorite.setImageDrawable(ContextCompat.getDrawable(holder.itemView.context,R.drawable.ic_star_no_favorite))
+		        }else{
+			        holder.itemView.ibv_favorite.setImageDrawable(ContextCompat.getDrawable(holder.itemView.context,R.drawable.ic_star))
+		        }
+	        }
             
         }
     }
@@ -45,7 +54,8 @@ class ContactRecyclerViewAdapter(val data: MutableList<Contact>) : RecyclerView.
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) = holder.bind(data[position], View.OnClickListener {
-        val bundle: Bundle = Bundle()
+        data[position].isFavorite =!data[position].isFavorite
+	    val bundle: Bundle = Bundle()
         bundle.putString(FAVORITE, FAVORITE)
         notifyItemChanged(position, bundle)
     })

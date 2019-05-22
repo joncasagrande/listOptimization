@@ -1,7 +1,9 @@
 package com.test.listoptimizationtest.adapter
 
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.test.listoptimizationtest.R
 import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*
 
@@ -18,6 +20,11 @@ class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 			.into(iv_contact)
 		*/
 		ibv_favorite.setOnClickListener(clickListener)
+		if(!item.isFavorite){
+			ibv_favorite.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_star_no_favorite))
+		}else{
+			ibv_favorite.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_star))
+		}
 		setOnClickListener {
 			// TODO: Handle on click
 			

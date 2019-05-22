@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import com.test.listoptimizationtest.adapter.ContactListAdapter
 import com.test.listoptimizationtest.adapter.ContactRecyclerViewAdapter
+import com.test.listoptimizationtest.adapter.SimpleContactRecyclerViewAdapter
 import com.test.listoptimizationtest.filter.ContactsFilter
 import com.test.listoptimizationtest.loader.ContactLoaderManager
 import com.test.listoptimizationtest.model.Contact
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
     val contacts: MutableList<Contact> = arrayListOf()
     var contactListAdapter = ContactListAdapter()
 	var contactRecyclerViewAdapter : ContactRecyclerViewAdapter = ContactRecyclerViewAdapter(contacts.toMutableList())
+    var simpleRecyclerViewAdapter : SimpleContactRecyclerViewAdapter = SimpleContactRecyclerViewAdapter(contacts.toMutableList())
     private val mPermissionList = arrayOf(
         Manifest.permission.READ_CONTACTS
     )
@@ -34,16 +36,31 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
         this.contacts.clear()
         this.contacts.addAll(contacts.toMutableList())
         val start = System.currentTimeMillis()
-        /*
-            contactRecyclerViewAdapter.swapItems(contacts.toMutableList())
-            rvContact.adapter = contactRecyclerViewAdapter
-        */
-		   contactListAdapter.submitList(contacts)
-		   rvContact.adapter = contactListAdapter
+        
+        //setSimpleRecyclerViewAdapter(contacts)
+        
+        //setContactListAdapter(contacts)
+        
+        setContactRecyclerViewAdapter(contacts)
+        
 		
-        val runTime = System.currentTimeMillis() - start
-        Log.d("MAINACTIVITY","Load Time ${runTime}")
+        val runTime : Long = System.currentTimeMillis() - start
+        Log.d("MAINACTIVITY", "Load Time : $runTime")
 
+    }
+    
+    fun setContactListAdapter(contacts: List<Contact>){
+        contactListAdapter.submitList(contacts)
+        rvContact.adapter = contactListAdapter
+    }
+    
+    fun setContactRecyclerViewAdapter(contacts: List<Contact>){
+        contactRecyclerViewAdapter.swapItems(contacts.toMutableList())
+        rvContact.adapter = contactRecyclerViewAdapter
+    }
+    fun setSimpleRecyclerViewAdapter(contacts: List<Contact>){
+        simpleRecyclerViewAdapter.swapItems(contacts.toMutableList())
+        rvContact.adapter = simpleRecyclerViewAdapter
     }
 
     lateinit var contactLoaderManager: ContactLoaderManager
