@@ -26,6 +26,9 @@ android {
             testCoverageEnabled true
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -51,6 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit-ktx:' + rootProject.extJUnitVersion
     androidTestImplementation 'androidx.test:runner:' + rootProject.runnerVersion
     androidTestImplementation 'androidx.test.espresso:espresso-core:' + rootProject.espressoVersion
+    androidTestImplementation 'org.mockito:mockito-android:2.25.0'
 
     testImplementation 'androidx.test:core:' + rootProject.coreVersion;
     testImplementation 'androidx.test.ext:junit:' + rootProject.extJUnitVersion
@@ -59,6 +63,7 @@ dependencies {
     testImplementation 'androidx.test.espresso:espresso-core:' + rootProject.espressoVersion
     testImplementation 'androidx.test.espresso:espresso-intents:' + rootProject.espressoVersion
     testImplementation 'androidx.test.ext:truth:' + rootProject.extTruthVersion
+    testImplementation 'org.mockito:mockito-android:2.25.0'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-contrib:2.2') {
         // Necessary to avoid version conflicts

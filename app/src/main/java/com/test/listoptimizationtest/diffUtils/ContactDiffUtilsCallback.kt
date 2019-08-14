@@ -33,15 +33,15 @@ class ContactDiffUtilsCallback(val oldList: List<Contact>, val newList: List<Con
 		val newContact = newList[newItemPosition]
 		val oldContact = oldList[oldItemPosition]
 		
-		if(newContact.name === oldContact.name){
+		if(newContact.name != oldContact.name){
 			bundle.putString(NAME, newContact.name)
 		}
 		
-		if(newContact.surename === oldContact.surename){
+		if(newContact.surename != oldContact.surename){
 			bundle.putString(SURNAME, newContact.surename)
 		}
 		
-		if(newContact.hasPhoto && !oldContact.hasPhoto){
+		if((newContact.hasPhoto && !oldContact.hasPhoto) ||  (!newContact.hasPhoto && oldContact.hasPhoto)){
 			bundle.putBoolean(PICTURE, newContact.hasPhoto)
 		}
 		
