@@ -1,6 +1,6 @@
 package com.test.listoptimizationtest.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import com.test.listoptimizationtest.R
 import com.test.listoptimizationtest.model.Contact
 
 
-class SimpleContactRecyclerViewAdapter(val data: MutableList<Contact>) : RecyclerView.Adapter<ContactViewHolder>() {
+class SimpleContactRecyclerViewAdapter(val data: MutableList<Contact>) : androidx.recyclerview.widget.RecyclerView.Adapter<ContactViewHolder>() {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder(

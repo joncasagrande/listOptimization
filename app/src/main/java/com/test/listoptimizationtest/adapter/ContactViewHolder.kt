@@ -1,8 +1,8 @@
 package com.test.listoptimizationtest.adapter
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.test.listoptimizationtest.R
 import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*

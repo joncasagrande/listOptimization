@@ -1,7 +1,7 @@
 package com.test.listoptimizationtest.loader
 
-import android.support.test.InstrumentationRegistry
 import android.util.Log
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.test.listoptimizationtest.MainActivity
 import com.test.listoptimizationtest.model.Contact
@@ -18,7 +18,7 @@ class ContactLoaderManagerTest {
 	lateinit var contactLoader : ContactLoaderManager
 	@Before
 	fun setUp() {
-		val context = InstrumentationRegistry.getTargetContext()
+		val context = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext()
 		contactLoader = ContactLoaderManager(context, object :
 			ContactLoaderManager.ContactLoaderCallback {
 			override fun loadFinished(contacts: List<Contact>) {

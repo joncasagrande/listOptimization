@@ -2,14 +2,12 @@ package com.test.listoptimizationtest
 
 import android.Manifest
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.PermissionChecker.PERMISSION_GRANTED
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import com.test.listoptimizationtest.adapter.ContactListAdapter
 import com.test.listoptimizationtest.adapter.ContactRecyclerViewAdapter
 import com.test.listoptimizationtest.adapter.SimpleContactRecyclerViewAdapter
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
         setContentView(R.layout.activity_main)
         validatePermissions()
         contactLoaderManager = ContactLoaderManager(this@MainActivity,this@MainActivity)
-        rvContact.layoutManager = LinearLayoutManager(this@MainActivity)
+        rvContact.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
     
     }
     private fun validatePermissions(){
@@ -87,7 +85,7 @@ class MainActivity : AppCompatActivity(), ContactLoaderManager.ContactLoaderCall
     override fun onStart() {
         super.onStart()
         if (ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_CONTACTS) == PERMISSION_GRANTED) {
-            LoaderManager.getInstance(this).initLoader(INSTANCES_LIST_LOADER, null, contactLoaderManager)
+            androidx.loader.app.LoaderManager.getInstance(this).initLoader(INSTANCES_LIST_LOADER, null, contactLoaderManager)
         } else {
             Log.e("MainActivity", "Unable to get appointment, read calendar permission not granted")
         }

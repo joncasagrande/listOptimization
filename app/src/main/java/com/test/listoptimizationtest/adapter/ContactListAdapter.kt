@@ -1,18 +1,18 @@
 package com.test.listoptimizationtest.adapter
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.recyclerview.extensions.ListAdapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
 import com.test.listoptimizationtest.*
 import com.test.listoptimizationtest.diffUtils.ContactDiffUltils
 import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*
 
-class ContactListAdapter() : ListAdapter<Contact, ContactViewHolder>(ContactDiffUltils()) {
+class ContactListAdapter : ListAdapter<Contact, ContactViewHolder>(ContactDiffUltils()) {
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
 		return ContactViewHolder(

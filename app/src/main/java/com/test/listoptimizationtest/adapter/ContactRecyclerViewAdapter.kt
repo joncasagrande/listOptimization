@@ -1,20 +1,19 @@
 package com.test.listoptimizationtest.adapter
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import com.test.listoptimizationtest.*
 import com.test.listoptimizationtest.diffUtils.ContactDiffUtilsCallback
 import com.test.listoptimizationtest.model.Contact
 import kotlinx.android.synthetic.main.item_contact.view.*
 
 
-class ContactRecyclerViewAdapter(val data: MutableList<Contact>) : RecyclerView.Adapter<ContactViewHolder>() {
+class ContactRecyclerViewAdapter(val data: MutableList<Contact>) : androidx.recyclerview.widget.RecyclerView.Adapter<ContactViewHolder>() {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder(

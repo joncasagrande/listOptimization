@@ -5,14 +5,13 @@ import android.database.Cursor
 import android.location.Address
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.CursorLoader
-import android.support.v4.content.Loader
+import androidx.loader.content.CursorLoader
+import androidx.loader.content.Loader
 import com.test.listoptimizationtest.SEARCH
 import com.test.listoptimizationtest.model.Contact
 import java.util.*
 
-class ContactLoaderManager(val context: Context, val callback : ContactLoaderCallback): LoaderManager.LoaderCallbacks<Cursor> {
+class ContactLoaderManager(val context: Context, val callback : ContactLoaderCallback): androidx.loader.app.LoaderManager.LoaderCallbacks<Cursor> {
     internal val NAME_TEMPLATE = "%s %s"
     var search = ""
     interface ContactLoaderCallback{
@@ -43,7 +42,7 @@ class ContactLoaderManager(val context: Context, val callback : ContactLoaderCal
 
         val uri = ContactsContract.Data.CONTENT_URI
         val sortOrder = ContactsContract.Contacts.SORT_KEY_ALTERNATIVE
-        return CursorLoader(context,uri,projection,selection,selectionArgs,sortOrder)
+        return CursorLoader(context, uri, projection, selection, selectionArgs, sortOrder)
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, cursor: Cursor?) {
@@ -83,7 +82,7 @@ class ContactLoaderManager(val context: Context, val callback : ContactLoaderCal
         callback.loadFinished(linkedList)
     }
 
-    override fun onLoaderReset(loader: Loader<Cursor>) {
+    override fun onLoaderReset(loader: androidx.loader.content.Loader<Cursor>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

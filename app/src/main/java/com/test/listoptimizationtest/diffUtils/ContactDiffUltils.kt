@@ -1,7 +1,7 @@
 package com.test.listoptimizationtest.diffUtils
 
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import android.util.Log
 import com.test.listoptimizationtest.NAME
 import com.test.listoptimizationtest.PICTURE
